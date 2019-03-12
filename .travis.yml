@@ -1,0 +1,24 @@
+language: php
+php:
+- 7.1
+- 7.2
+cache:
+  directories:
+  - "$HOME/.composer/cache"
+branches:
+  only:
+  - master
+  - "/^v\\d+\\.\\d+(\\.\\d+)?(-\\S*)?$/"
+before_install:
+- phpenv config-rm xdebug.ini
+install: composer install
+script:
+- "./vendor/bin/phpstan analyse"
+- php vendor/bin/phpunit
+- "./vendor/bin/phpcs"
+notifications:
+  slack:
+    rooms:
+      secure: "TTIneHX3Wkqq1VT+17osqAJ2nOby8grV1+BW005VVZK6yDMw/dmY2FldlXOywFDCpF/hcryz+2qSiRF9ZKdO+v+v4xmEImI2fc1OHm/lTBv0O4VaVWvFq+gqoreU9vCIDy8Ne+kxe7pMIx8+ML/BLLpEWy5O4qsF9yqxQQ4UPA+GlnLWCCNB0tGBLeJSoxlgErfkogXDq0TfR5CkejYxmXQB9c2QYMr22AO2YRU9DUlcpIveVwFY9Ozj9Z9W5tMiCGLy7B/rfIfVMLLldtfLcAz5J1xsvvERFErGaHpG1xAVirNi0sL5ROxNcjqGIOIC9O/WiYM1jl0jbRa2BPk6dcJP3ez1lTKGQkXWUQL/0gxXwhYHpvHlw/XxOyZyX7BYI/c1wAbeBn/PgC1R/qijm+Ka/tarHzAmaZPdcpA/Scx4Au0twm9fe40/YVn22rPPwIyvl4P/Hb9Q1W/2r4Q0P2zmDucTr/sAYRXKxevwD9Ro7dLg0MJ90/nSC8vfphMWNe41qcW9zAlX8/6VmYzL9i+0hHlAg4jDx/BPRQLyuKHtKOAfLgZ5QlKczBWrhPGyrxk23V0N0UOwNCjTWqRvllX+AMg4omVDedlnCHbx6+V/XQes7rttkZaxfmCRfHzt0c2awhyAdvsGgk1pkAGlPRYYD9d2HhYOgu/K7Qr/wL0="
+  on_success: change
+  on_failure: always

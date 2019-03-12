@@ -1,0 +1,12 @@
+<phpunit bootstrap="vendor/autoload.php">
+  <testsuites>
+    <testsuite name="common">
+      <directory>tests</directory>
+    </testsuite>
+  </testsuites>
+	<groups>
+		<exclude>
+			<group>aws-integration</group>
+		</exclude>
+	</groups>
+</phpunit>
