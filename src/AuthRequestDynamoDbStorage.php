@@ -33,7 +33,7 @@ class AuthRequestDynamoDbStorage implements AuthRequestStorageInterface
      */
     public function getId(): ?string
     {
-        return $this->data['id'];
+        return isset($this->data['id']) ? $this->data['id'] : null;
     }
 
     /**
@@ -41,7 +41,7 @@ class AuthRequestDynamoDbStorage implements AuthRequestStorageInterface
      */
     public function getClientAppId(): ?string
     {
-        return $this->data['client_app_id'];
+        return isset($this->data['client_app_id']) ? $this->data['client_app_id'] : null;
     }
 
     /**
@@ -49,7 +49,7 @@ class AuthRequestDynamoDbStorage implements AuthRequestStorageInterface
      */
     public function getUri(): ?string
     {
-        return $this->data['uri'];
+        return isset($this->data['uri']) ? $this->data['uri'] : null;
     }
 
     /**
@@ -57,7 +57,7 @@ class AuthRequestDynamoDbStorage implements AuthRequestStorageInterface
      */
     public function getCreatedAt(): ?DateTime
     {
-        return $this->data['created_at'];
+        return isset($this->data['created_at']) ? $this->data['created_at'] : null;
     }
 
     /**

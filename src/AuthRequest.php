@@ -89,9 +89,10 @@ class AuthRequest
         }
 
         // Check that the request has not expired
+        $createdAt = $storage->getCreatedAt();
         $now = new DateTime;
-        if (($now->getTimestamp() - self::EXPIRES_IN) >
-            $storage->getCreatedAt()->getTimestamp()
+        if ($createdAt === null ||
+            ($now->getTimestamp() - self::EXPIRES_IN) > $createdAt->getTimestamp()
         ) {
             throw new AuthRequestExpiredException;
         }

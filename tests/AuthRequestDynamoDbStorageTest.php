@@ -9,6 +9,7 @@ use DateTime;
 use DateInterval;
 use Aws\Sdk;
 use Aws\Result;
+use Exception;
 
 class AuthRequestDynamoDbStorageTest extends AbstractTestCase
 {
@@ -37,10 +38,16 @@ class AuthRequestDynamoDbStorageTest extends AbstractTestCase
 
         $this->assertTrue($storage->load($id), 'Load from DynamoDB');
 
+        $createdAt = $storage->getCreatedAt();
+        if ($createdAt === null) {
+            # This can't happen. It's just here to maintain type safety for phpstan
+            throw new Exception;
+        }
+
         $this->assertEquals($storage->getId(), $id);
         $this->assertEquals($storage->getClientAppId(), $clientAppId);
         $this->assertEquals($storage->getUri(), $redirectUri);
-        $this->assertEquals($storage->getCreatedAt()->getTimestamp(), $dt->getTimestamp());
+        $this->assertEquals($createdAt->getTimestamp(), $dt->getTimestamp());
 
         $storage->setCompleted(true);
 

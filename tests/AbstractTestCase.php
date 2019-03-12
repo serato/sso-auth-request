@@ -12,6 +12,12 @@ use GuzzleHttp\HandlerStack;
 
 abstract class AbstractTestCase extends TestCase
 {
+    /* @var MockHandler */
+    private $swsMockHandler;
+
+    /* @var AwsMockHandler */
+    private $awsMockHandler;
+
     /**
      * Returns an `SwsSdk` bootstrapped with a mock response handler and the
      * provided mock Response objects added to the handler stack.

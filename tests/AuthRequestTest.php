@@ -6,11 +6,13 @@ namespace Serato\SsoRequest\Test;
 use Serato\SsoRequest\Test\AbstractTestCase;
 use Serato\SsoRequest\AuthRequest;
 use Serato\SsoRequest\Test\StorageMock;
+use Serato\SsoRequest\AuthRequestStorageInterface;
 use Ramsey\Uuid\Uuid;
 use DateTime;
 use DateInterval;
 use Serato\SwsSdk\Sdk as SwsSdk;
 use GuzzleHttp\Psr7\Response;
+use Exception;
 
 class AuthRequestTest extends AbstractTestCase
 {
@@ -56,6 +58,10 @@ class AuthRequestTest extends AbstractTestCase
     public function testCreateFromStorageBadRequestId()
     {
         $storageMock = $this->getStorageMock(true);
+        if ($storageMock->getId() === null || $storageMock->getClientAppId() === null) {
+            # This can't happen. It's just here to maintain type safety for phpstan
+            throw new Exception;
+        }
         $auth = AuthRequest::createFromStorage($storageMock->getId(), $storageMock->getClientAppId(), $storageMock);
     }
 
@@ -65,6 +71,10 @@ class AuthRequestTest extends AbstractTestCase
     public function testCreateFromStorageBadClientAppId()
     {
         $storageMock = $this->getStorageMock();
+        if ($storageMock->getId() === null) {
+            # This can't happen. It's just here to maintain type safety for phpstan
+            throw new Exception;
+        }
         $auth = AuthRequest::createFromStorage($storageMock->getId(), self::CLIENT_APP_ID . '+extra', $storageMock);
     }
 
@@ -75,6 +85,10 @@ class AuthRequestTest extends AbstractTestCase
     {
         $storageMock = $this->getStorageMock();
         $storageMock->setCompleted(true);
+        if ($storageMock->getId() === null || $storageMock->getClientAppId() === null) {
+            # This can't happen. It's just here to maintain type safety for phpstan
+            throw new Exception;
+        }
         $auth = AuthRequest::createFromStorage($storageMock->getId(), $storageMock->getClientAppId(), $storageMock);
     }
 
@@ -87,12 +101,20 @@ class AuthRequestTest extends AbstractTestCase
         $createdAt = new DateTime;
         $createdAt->sub(new DateInterval('PT' . (AuthRequest::EXPIRES_IN + 1) . 'S'));
         $storageMock->setCreatedAt($createdAt);
+        if ($storageMock->getId() === null || $storageMock->getClientAppId() === null) {
+            # This can't happen. It's just here to maintain type safety for phpstan
+            throw new Exception;
+        }
         $auth = AuthRequest::createFromStorage($storageMock->getId(), $storageMock->getClientAppId(), $storageMock);
     }
 
     public function testCreateFromStorage()
     {
         $storageMock = $this->getStorageMock();
+        if ($storageMock->getId() === null || $storageMock->getClientAppId() === null) {
+            # This can't happen. It's just here to maintain type safety for phpstan
+            throw new Exception;
+        }
         $auth = AuthRequest::createFromStorage($storageMock->getId(), $storageMock->getClientAppId(), $storageMock);
 
         $this->assertEquals($auth->getId(), $storageMock->getId());
@@ -102,10 +124,15 @@ class AuthRequestTest extends AbstractTestCase
 
     public function testGetTokensHappyPath()
     {
+        $requestBody = json_encode($this->getTokenExchangeBody());
+        if ($requestBody === false) {
+            # This can't happen. It's just here to maintain type safety for phpstan
+            throw new Exception;
+        }
         $response = new Response(
             200,
             ['Content-Type' => 'application/json'],
-            json_encode($this->getTokenExchangeBody())
+            $requestBody
         );
 
         $storageMock = $this->getStorageMock();
@@ -127,13 +154,18 @@ class AuthRequestTest extends AbstractTestCase
      */
     public function testGetTokens400Response()
     {
+        $requestBody = json_encode([
+            'code' => 1013,
+            'error' => 'Invalid `redirect_uri` value. URI does not match with issued authorization code.'
+        ]);
+        if ($requestBody === false) {
+            # This can't happen. It's just here to maintain type safety for phpstan
+            throw new Exception;
+        }
         $response = new Response(
             400,
             ['Content-Type' => 'application/json'],
-            json_encode([
-                'code' => 1013,
-                'error' => 'Invalid `redirect_uri` value. URI does not match with issued authorization code.'
-            ])
+            $requestBody
         );
 
         $storageMock = $this->getStorageMock();
@@ -151,9 +183,9 @@ class AuthRequestTest extends AbstractTestCase
      *
      * @param bool $errorOnLoad
      * @param bool $errorOnSave
-     * @return StorageMock
+     * @return AuthRequestStorageInterface
      */
-    private function getStorageMock($errorOnLoad = false, $errorOnSave = false)
+    private function getStorageMock($errorOnLoad = false, $errorOnSave = false): AuthRequestStorageInterface
     {
         $storageMock = new StorageMock($errorOnLoad, $errorOnSave);
 

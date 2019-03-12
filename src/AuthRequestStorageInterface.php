@@ -27,7 +27,7 @@ interface AuthRequestStorageInterface
     /**
      * Returns the source URI for the auth request
      *
-     * @return void
+     * @return string
      */
     public function getUri(): ?string;
 
