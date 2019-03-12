@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Serato\SsoRequest;
 
 use Serato\SsoRequest\Exception\InvalidAuthRequestIdException;
