@@ -1,0 +1,11 @@
+/.settings
+/.buildpath
+*.DS_Store
+/.project
+/vendor/*
+/.idea/*
+composer.lock
+/docs
+/tests/reports
+debug.log
+error.log
