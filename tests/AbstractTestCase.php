@@ -30,8 +30,10 @@ abstract class AbstractTestCase extends TestCase
         $this->swsMockHandler = new MockHandler($mockResponses);
         $args = [
             SwsSdk::BASE_URI => [
-                SwsSdk::BASE_URI_ID        => 'https://id.server.com',
-                SwsSdk::BASE_URI_LICENSE   => 'https://license.server.com',
+                SwsSdk::BASE_URI_ID        => 'http://id.server.com',
+                SwsSdk::BASE_URI_LICENSE   => 'http://license.server.com',
+                SwsSdk::BASE_URI_PROFILE   => 'https://profile.server.com',
+                SwsSdk::BASE_URI_ECOM      => 'http://ecom.server.com'
             ],
             'handler' => HandlerStack::create($this->swsMockHandler)
         ];
