@@ -16,6 +16,7 @@ script:
 - "./vendor/bin/phpstan analyse"
 - php vendor/bin/phpunit
 - "./vendor/bin/phpcs"
+- "./vendor/bin/security-checker security:check"
 notifications:
   slack:
     rooms:
