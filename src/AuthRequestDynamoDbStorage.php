@@ -22,7 +22,7 @@ class AuthRequestDynamoDbStorage implements AuthRequestStorageInterface
     /* @var boolean */
     private $completed = false;
 
-    const DYNAMO_DB_TABLE_NAME = 'client.app.sso.auth.requests';
+    private const DYNAMO_DB_TABLE_NAME = 'client.app.sso.auth.requests';
 
     public function __construct(AwsSdk $awsSdk)
     {

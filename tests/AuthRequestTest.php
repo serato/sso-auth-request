@@ -17,10 +17,10 @@ use Exception;
 
 class AuthRequestTest extends AbstractTestCase
 {
-    const CLIENT_APP_ID = 'my-client-app-id';
-    const REDIRECT_URI = 'my://test/redirect/uri';
-    const ACCESS_TOKEN = 'NgCXRKdjsLksdKKJjslPQmxMzYjw';
-    const REFRESH_TOKEN = 'NgAagAAYqJQjdkEkjkjSkkseKSKaweplOeklUm_SHo';
+    private const CLIENT_APP_ID = 'my-client-app-id';
+    private const REDIRECT_URI = 'my://test/redirect/uri';
+    private const ACCESS_TOKEN = 'NgCXRKdjsLksdKKJjslPQmxMzYjw';
+    private const REFRESH_TOKEN = 'NgAagAAYqJQjdkEkjkjSkkseKSKaweplOeklUm_SHo';
 
     /**
      * @expectedException \Exception

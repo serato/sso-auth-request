@@ -17,7 +17,7 @@ use DateTime;
 
 class AuthRequest
 {
-    const EXPIRES_IN = 3600; // seconds
+    public const EXPIRES_IN = 3600; // seconds
 
     /* @var AuthRequestStorageInterface */
     private $storage;
