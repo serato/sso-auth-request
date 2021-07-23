@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Serato\SsoRequest;
@@ -50,7 +51,7 @@ class AuthRequest
                         ->setId($id)
                         ->setClientAppId($clientAppId)
                         ->setUri($redirectUri)
-                        ->setCreatedAt(new DateTime)
+                        ->setCreatedAt(new DateTime())
                         ->setCompleted(false)
                         ->save();
         if ($bSuccess) {
@@ -75,26 +76,27 @@ class AuthRequest
         AuthRequestStorageInterface $storage
     ): self {
         if (!$storage->load($id)) {
-            throw new InvalidAuthRequestIdException;
+            throw new InvalidAuthRequestIdException();
         }
 
         // Check that the request was issued for provided client app id
         if ($storage->getClientAppId() !== $clientAppId) {
-            throw new InvalidAuthRequestIdException;
+            throw new InvalidAuthRequestIdException();
         }
 
         // Check that the request hasn't already been completed
         if ($storage->getCompleted()) {
-            throw new InvalidAuthRequestIdException;
+            throw new InvalidAuthRequestIdException();
         }
 
         // Check that the request has not expired
         $createdAt = $storage->getCreatedAt();
-        $now = new DateTime;
-        if ($createdAt === null ||
+        $now = new DateTime();
+        if (
+            $createdAt === null ||
             ($now->getTimestamp() - self::EXPIRES_IN) > $createdAt->getTimestamp()
         ) {
-            throw new AuthRequestExpiredException;
+            throw new AuthRequestExpiredException();
         }
 
         return new self($storage);

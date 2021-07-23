@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Serato\SsoRequest\Test;
@@ -21,7 +22,7 @@ class AuthRequestDynamoDbStorageTest extends AbstractTestCase
         $id = 'my-id';
         $clientAppId = 'my-client-app';
         $redirectUri = '/redirect/uri';
-        $dt = new DateTime;
+        $dt = new DateTime();
 
         $storage = new AuthRequestDynamoDbStorage(new Sdk());
         $bVal = $storage
@@ -41,7 +42,7 @@ class AuthRequestDynamoDbStorageTest extends AbstractTestCase
         $createdAt = $storage->getCreatedAt();
         if ($createdAt === null) {
             # This can't happen. It's just here to maintain type safety for phpstan
-            throw new Exception;
+            throw new Exception();
         }
 
         $this->assertEquals($storage->getId(), $id);
@@ -65,7 +66,7 @@ class AuthRequestDynamoDbStorageTest extends AbstractTestCase
         $storage
             ->setId('my-new-id')
             ->setCompleted(true);
-        
+
         $this->assertTrue(true);
     }
 
@@ -74,7 +75,7 @@ class AuthRequestDynamoDbStorageTest extends AbstractTestCase
         $id = 'my-id';
         $clientAppId = 'my-client-app';
         $redirectUri = '/redirect/uri';
-        $dt = new DateTime;
+        $dt = new DateTime();
 
         $results = [
             // DynamoDB `putItem`
@@ -99,7 +100,7 @@ class AuthRequestDynamoDbStorageTest extends AbstractTestCase
         $id = 'my-id';
         $clientAppId = 'my-client-app';
         $redirectUri = '/redirect/uri';
-        $dt = new DateTime;
+        $dt = new DateTime();
 
         $results = [
             // DynamoDB `deleteItem`

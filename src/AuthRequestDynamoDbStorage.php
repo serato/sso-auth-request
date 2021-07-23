@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Serato\SsoRequest;
@@ -185,7 +186,7 @@ class AuthRequestDynamoDbStorage implements AuthRequestStorageInterface
             $this->data['id'] = $result['Item']['id']['S'];
             $this->data['client_app_id'] = $result['Item']['client_app_id']['S'];
             $this->data['uri'] = $result['Item']['uri']['S'];
-            $dt = new DateTime;
+            $dt = new DateTime();
             $dt->setTimestamp((int)$result['Item']['created_at']['N']);
             $this->data['created_at'] = $dt;
             return true;
