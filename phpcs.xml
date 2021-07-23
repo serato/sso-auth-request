@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- See https://github.com/squizlabs/PHP_CodeSniffer/wiki/Annotated-ruleset.xml for all options -->
 <ruleset name="SUP-SDK">
-    <rule ref="PSR2"/>
+    <rule ref="PSR12"/>
     <file>src</file>
     <file>tests</file>
 </ruleset>

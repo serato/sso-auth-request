@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Serato\SsoRequest\Test;
@@ -12,11 +13,11 @@ use DateTime;
  */
 class StorageMock implements AuthRequestStorageInterface
 {
-    const ID = 'id';
-    const CLIENT_APP_ID ='client_app_id';
-    const URI = 'uri';
-    const CREATED_AT = 'created_at';
-    const COMPLETED = 'completed';
+    private const ID = 'id';
+    private const CLIENT_APP_ID = 'client_app_id';
+    private const URI = 'uri';
+    private const CREATED_AT = 'created_at';
+    private const COMPLETED = 'completed';
 
     /* @var array */
     private $data = [];

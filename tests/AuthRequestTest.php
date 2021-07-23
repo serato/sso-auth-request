@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Serato\SsoRequest\Test;
@@ -16,10 +17,10 @@ use Exception;
 
 class AuthRequestTest extends AbstractTestCase
 {
-    const CLIENT_APP_ID = 'my-client-app-id';
-    const REDIRECT_URI = 'my://test/redirect/uri';
-    const ACCESS_TOKEN = 'NgCXRKdjsLksdKKJjslPQmxMzYjw';
-    const REFRESH_TOKEN = 'NgAagAAYqJQjdkEkjkjSkkseKSKaweplOeklUm_SHo';
+    private const CLIENT_APP_ID = 'my-client-app-id';
+    private const REDIRECT_URI = 'my://test/redirect/uri';
+    private const ACCESS_TOKEN = 'NgCXRKdjsLksdKKJjslPQmxMzYjw';
+    private const REFRESH_TOKEN = 'NgAagAAYqJQjdkEkjkjSkkseKSKaweplOeklUm_SHo';
 
     /**
      * @expectedException \Exception
@@ -60,7 +61,7 @@ class AuthRequestTest extends AbstractTestCase
         $storageMock = $this->getStorageMock(true);
         if ($storageMock->getId() === null || $storageMock->getClientAppId() === null) {
             # This can't happen. It's just here to maintain type safety for phpstan
-            throw new Exception;
+            throw new Exception();
         }
         $auth = AuthRequest::createFromStorage($storageMock->getId(), $storageMock->getClientAppId(), $storageMock);
     }
@@ -73,7 +74,7 @@ class AuthRequestTest extends AbstractTestCase
         $storageMock = $this->getStorageMock();
         if ($storageMock->getId() === null) {
             # This can't happen. It's just here to maintain type safety for phpstan
-            throw new Exception;
+            throw new Exception();
         }
         $auth = AuthRequest::createFromStorage($storageMock->getId(), self::CLIENT_APP_ID . '+extra', $storageMock);
     }
@@ -87,7 +88,7 @@ class AuthRequestTest extends AbstractTestCase
         $storageMock->setCompleted(true);
         if ($storageMock->getId() === null || $storageMock->getClientAppId() === null) {
             # This can't happen. It's just here to maintain type safety for phpstan
-            throw new Exception;
+            throw new Exception();
         }
         $auth = AuthRequest::createFromStorage($storageMock->getId(), $storageMock->getClientAppId(), $storageMock);
     }
@@ -98,12 +99,12 @@ class AuthRequestTest extends AbstractTestCase
     public function testCreateFromStorageBadCreatedAt()
     {
         $storageMock = $this->getStorageMock();
-        $createdAt = new DateTime;
+        $createdAt = new DateTime();
         $createdAt->sub(new DateInterval('PT' . (AuthRequest::EXPIRES_IN + 1) . 'S'));
         $storageMock->setCreatedAt($createdAt);
         if ($storageMock->getId() === null || $storageMock->getClientAppId() === null) {
             # This can't happen. It's just here to maintain type safety for phpstan
-            throw new Exception;
+            throw new Exception();
         }
         $auth = AuthRequest::createFromStorage($storageMock->getId(), $storageMock->getClientAppId(), $storageMock);
     }
@@ -113,7 +114,7 @@ class AuthRequestTest extends AbstractTestCase
         $storageMock = $this->getStorageMock();
         if ($storageMock->getId() === null || $storageMock->getClientAppId() === null) {
             # This can't happen. It's just here to maintain type safety for phpstan
-            throw new Exception;
+            throw new Exception();
         }
         $auth = AuthRequest::createFromStorage($storageMock->getId(), $storageMock->getClientAppId(), $storageMock);
 
@@ -127,7 +128,7 @@ class AuthRequestTest extends AbstractTestCase
         $requestBody = json_encode($this->getTokenExchangeBody());
         if ($requestBody === false) {
             # This can't happen. It's just here to maintain type safety for phpstan
-            throw new Exception;
+            throw new Exception();
         }
         $response = new Response(
             200,
@@ -160,7 +161,7 @@ class AuthRequestTest extends AbstractTestCase
         ]);
         if ($requestBody === false) {
             # This can't happen. It's just here to maintain type safety for phpstan
-            throw new Exception;
+            throw new Exception();
         }
         $response = new Response(
             400,
@@ -193,7 +194,7 @@ class AuthRequestTest extends AbstractTestCase
                     ->setId(Uuid::uuid4()->toString())
                     ->setClientAppId(self::CLIENT_APP_ID)
                     ->setUri(self::REDIRECT_URI)
-                    ->setCreatedAt(new DateTime)
+                    ->setCreatedAt(new DateTime())
                     ->setCompleted(false);
     }
 
@@ -201,26 +202,26 @@ class AuthRequestTest extends AbstractTestCase
     {
         return [
             'user' => [
-                'id'=> 12345,
-                'email_address'=> 'example@example.com',
-                'first_name'=> 'Billy',
-                'last_name'=> 'Bob',
-                'date_created'=> '2016-11-05T08:15:30Z',
-                'locale'=> 'en_US.UTF-8'
+                'id' => 12345,
+                'email_address' => 'example@example.com',
+                'first_name' => 'Billy',
+                'last_name' => 'Bob',
+                'date_created' => '2016-11-05T08:15:30Z',
+                'locale' => 'en_US.UTF-8'
             ],
             'tokens' => [
                 'access' => [
-                    'token'=> self::ACCESS_TOKEN,
-                    'expires_at'=> 1489142529,
-                    'scopes'=> [
-                        'license.serato.io'=> ['user-license', 'user-license-admin']
+                    'token' => self::ACCESS_TOKEN,
+                    'expires_at' => 1489142529,
+                    'scopes' => [
+                        'license.serato.io' => ['user-license', 'user-license-admin']
                     ],
-                    'type'=> 'Bearer'
+                    'type' => 'Bearer'
                 ],
                 'refresh' => [
-                    'token'=> self::REFRESH_TOKEN,
-                    'expires_at'=> 1489174529,
-                    'type'=> 'Bearer'
+                    'token' => self::REFRESH_TOKEN,
+                    'expires_at' => 1489174529,
+                    'type' => 'Bearer'
                 ]
             ]
         ];
