@@ -204,7 +204,7 @@ class AuthRequestDynamoDbStorage implements AuthRequestStorageInterface
             'client_app_id' => ['S' => $this->data['client_app_id']],
             'uri'           => ['S' => $this->data['uri']],
             'created_at'    => ['N' => (string)$this->data['created_at']->getTimestamp()],
-            'ttl'           => ['N' => (string)(time() + self::ITEM_TIME_TO_LIVE)]
+            'ttl'           => ['N' => (string)($this->data['created_at'] + self::ITEM_TIME_TO_LIVE)]
         ];
     }
 
