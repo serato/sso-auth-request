@@ -24,7 +24,7 @@ class AuthRequestDynamoDbStorage implements AuthRequestStorageInterface
 
     private const DYNAMO_DB_TABLE_NAME = 'client.app.sso.auth.requests';
 
-    private const ITEM_TIME_TO_LIVE = 43200; # 12 hours
+    private const ITEM_TIME_TO_LIVE = 7200; # 120 mins
 
     public function __construct(AwsSdk $awsSdk)
     {
