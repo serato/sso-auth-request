@@ -1,11 +1,13 @@
 name: Builds and deploys the build for sso auth request
 on:
+  pull_request:
+    types: [opened, synchronize, reopened]
   push:
     branches:    
       - master
       - "/^v\\d+\\.\\d+(\\.\\d+)?(-\\S*)?$/"
   workflow_dispatch:
-    
+
 jobs:
   unit-tests-and-analyzers:
     name: "PHP ${{ matrix.php-versions }}: Phpstan, Phpcs, Phpunit tests"
