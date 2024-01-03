@@ -7,7 +7,7 @@ on:
     workflow_dispatch:
     
 jobs:
-  unit-tests-and-build-process:
+  unit-tests-and-analyzers:
     name: "PHP ${{ matrix.php-versions }}: Phpstan, Phpcs, Phpunit tests"
     runs-on: ${{ matrix.operating-system }}
     strategy:
