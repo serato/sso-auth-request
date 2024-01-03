@@ -42,6 +42,7 @@ jobs:
 
       - name: Run static code analyzers
         run: |
+          ./vendor/bin/phpstan analyse
           ./vendor/bin/phpcs
           ./vendor/bin/security-checker security:check
       - name: Run test suite
