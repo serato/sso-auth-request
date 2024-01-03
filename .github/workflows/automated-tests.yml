@@ -1,0 +1,45 @@
+name: Builds and deploys the build for sso auth request
+on:
+  push:
+    branches:    
+      - master
+      - "/^v\\d+\\.\\d+(\\.\\d+)?(-\\S*)?$/"
+    workflow_dispatch:
+    
+jobs:
+  unit-tests-and-build-process:
+    name: "PHP ${{ matrix.php-versions }}: Phpstan, Phpcs, Phpunit tests"
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        operating-system: [ubuntu-latest]
+        php-versions: ['7.1','7.2']
+     steps:
+      - uses: actions/checkout@v3
+      - name: Setup PHP
+        uses: shivammathur/setup-php@master
+        with:
+          php-version: ${{ matrix.php-versions }}
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v3
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
+      - name: Install dependencies
+        uses: php-actions/composer@v6
+        with:
+          php_version: ${{ matrix.php-versions }}
+          php_extensions: gmp
+          version: 2.2
+      - name: Run static code analyzers
+        run: |
+          ./vendor/bin/phpstan analyse
+          ./vendor/bin/phpcs
+          ./vendor/bin/security-checker security:check
+      - name: Run test suite
+        run: |
+          php vendor/bin/phpunit
+      - name: Run 
