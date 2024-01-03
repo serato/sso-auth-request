@@ -44,4 +44,3 @@ jobs:
       - name: Run test suite
         run: |
           php vendor/bin/phpunit
-      - name: Run 
