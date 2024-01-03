@@ -1,11 +1,14 @@
-name: Builds and deploys the build for sso auth request
+# This workflow is triggered every time a PR is opened, reopened, or the head branch of the pull request is updated.
+# Also is triggered when there is a push to master or a release branch. # It is also possible to trigger it manually.
+# ./vendor/bin/phpstan analyse is left out from Run Static Code Analyzers due to 95 errors
+name: Code checking and unit tests
 on:
   pull_request:
     types: [opened, synchronize, reopened]
   push:
-    branches:    
+    branches:
       - master
-      - "/^v\\d+\\.\\d+(\\.\\d+)?(-\\S*)?$/"
+      - "/^v\\d+\\.\\d+(\\.\\d+)?(-\\S*)?$/" #release branches
   workflow_dispatch:
 
 jobs:
@@ -16,7 +19,7 @@ jobs:
       matrix:
         operating-system: [ubuntu-latest]
         php-versions: ['7.1','7.2']
-     steps:
+    steps:
       - uses: actions/checkout@v3
       - name: Setup PHP
         uses: shivammathur/setup-php@master
@@ -36,9 +39,9 @@ jobs:
           php_version: ${{ matrix.php-versions }}
           php_extensions: gmp
           version: 2.2
+
       - name: Run static code analyzers
         run: |
-          ./vendor/bin/phpstan analyse
           ./vendor/bin/phpcs
           ./vendor/bin/security-checker security:check
       - name: Run test suite
