@@ -41,7 +41,7 @@ jobs:
 
       - name: Run static code analyzers
         run: |
-          ./vendor/bin/phpstan analyse [--paths-file phpstan.neon] [--memory-limit 1G]
+          ./vendor/bin/phpstan analyse [--paths-file phpstan.neon] [--memory-limit 2G]
           ./vendor/bin/phpcs
           ./vendor/bin/security-checker security:check
       - name: Run test suite
