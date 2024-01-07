@@ -16,7 +16,7 @@
 		"phpstan/phpstan-phpunit": "^0.11.0",
 		"guzzlehttp/guzzle": "^6.0.0",
 		"enlightn/security-checker": "^1.4",
-		"nette": "2.4.9"
+		"nette/utils": "2.4.9"
 	},
 	"autoload": {
 		"psr-4": {
