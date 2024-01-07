@@ -16,7 +16,7 @@ jobs:
     runs-on: ${{ matrix.operating-system }}
     strategy:
       matrix:
-        operating-system: [ubuntu-latest]
+        operating-system: [ubuntu-20.04]
         php-versions: ['7.1','7.2']
     steps:
       - uses: actions/checkout@v3
@@ -41,7 +41,7 @@ jobs:
 
       - name: Run static code analyzers
         run: |
-          ./vendor/bin/phpstan analyse [--paths-file phpstan.neon] [--memory-limit 2G]
+          ./vendor/bin/phpstan analyse [--paths-file phpstan.neon]
           ./vendor/bin/phpcs
           ./vendor/bin/security-checker security:check
       - name: Run test suite
